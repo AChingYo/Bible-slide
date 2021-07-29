@@ -22,13 +22,23 @@
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				console.log( "ready!" );
+				$.getJSON( "Bible.json" , function( result ){
+					for(var i=0;i<result.length;++i) {
+						var slide = "<section>" + result[i] + "</section>";
+						$($(".slides")[0]).append(slide);
 
+					}
+				});
+			});
+		</script>
 		<script src="reveal.js-master/dist/reveal.js"></script>
 		<script src="reveal.js-master/plugin/notes/notes.js"></script>
 		<script src="reveal.js-master/plugin/markdown/markdown.js"></script>
 		<script src="reveal.js-master/plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
@@ -39,12 +49,4 @@
 			});
 		</script>
 	</body>
-	<script>
-		$( document ).ready(function() {
-			console.log( "ready!" );
-			$.getJSON( "Bible.json" , function( result ){
-				alert(result);
-			});
-		});
-	</script>
 </html>
