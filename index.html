@@ -25,7 +25,7 @@
 		<script>
 			$(document).ready(function() {
 				console.log( "ready!" );
-				$.getJSON( "Bible.json" , function( result ){
+				$.getJSON( "Bible_v1_0.json" , function( result ){
 					for(var i=0;i<result.length;++i) {
 						var slide = "<section>" + result[i] + "</section>";
 						$($(".slides")[0]).append(slide);
