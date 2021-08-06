@@ -16,6 +16,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+				<section>和合本</section>
 			</div>
 		</div>
 
@@ -23,13 +24,6 @@
 		<script>
 			$(document).ready(function() {
 				console.log( "ready!" );
-				$.getJSON( "Bible_v1_1.json" , function( result ){
-					for(var i=0;i<result.length;++i) {
-						$($(".slides")[0]).append("<section>");
-						$($(".slides")[0]).append("<section>" + result[i]["name"] + "</section>");
-						$($(".slides")[0]).append("</section>");
-					}
-				});
 			});
 		</script>
 		<script src="reveal.js-master/dist/reveal.js"></script>
@@ -37,14 +31,36 @@
 		<script src="reveal.js-master/plugin/markdown/markdown.js"></script>
 		<script src="reveal.js-master/plugin/highlight/highlight.js"></script>
 		<script>
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
-
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
+			slideInit(revealInit);
+			function slideInit(callback) {
+				$.getJSON( "https://achingyo.github.io/Bible-slide/Bible_v1_1.json" , function( result ){
+					for(var i=0;i<result.length;++i) {
+						var content =
+							"<section>";
+						content +=
+								"<section>" +
+									result[i]["name"] +
+								"</section>";
+						for(var j=0;j<result[i]["content"].length;++j) {
+							content +=
+								"<section>" +
+									result[i]["content"][j] +
+								"</section>";
+						}
+						content +=
+							"</section>";
+						$($(".slides")[0]).append(content);
+					}
+					callback();
+				});
+			}
+			function revealInit() {
+				Reveal.initialize({
+					hash: true,
+					// Learn about plugins: https://revealjs.com/plugins/
+					plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				})
+			}
 		</script>
 	</body>
 </html>
