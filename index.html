@@ -38,13 +38,25 @@
 						var content =
 							"<section>";
 						content +=
-								"<section>" +
-									result[i]["name"] +
+								"<section data-auto-animate>" +
+									"<h2>" +
+										result[i]["name"] +
+									"</h2>" +
 								"</section>";
 						for(var j=0;j<result[i]["content"].length;++j) {
 							content +=
-								"<section>" +
-									result[i]["content"][j] +
+								"<section data-auto-animate>";
+							content +=
+									"<h3>" +
+										result[i]["content"][j] +
+									"</h3>";
+							if (j+1 < result[i]["content"].length) {
+								content +=
+									"<h3 style=\"color: rgb(100, 100, 100);\";>" +
+										result[i]["content"][j+1] +
+									"</h3>";
+							}
+							content +=
 								"</section>";
 						}
 						content +=
