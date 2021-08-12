@@ -33,37 +33,48 @@
 		<script>
 			slideInit(revealInit);
 			function slideInit(callback) {
-				$.getJSON( "https://achingyo.github.io/Bible-slide/Bible_v1_1.json" , function( result ){
+				$.getJSON( "https://achingyo.github.io/Bible-slide/Bible_v1_2.json" , function( result ){
 					for(var i=0;i<result.length;++i) {
 						var content =
-							"<section>";
-						content +=
-								"<section data-auto-animate>" +
+							"<section>" +
+								"<section data-auto-animate id=\"" + result[i]["name"] + "\">" +
 									"<h2>" +
 										result[i]["name"] +
 									"</h2>" +
 									"<h4 style=\"color: rgb(100, 100, 100);\";>" +
-										result[i]["content"][0] +
+										result[i]["content"][0][0]["content"] +
 									"</h4>" +
-								"</section>";
+								"</section>" +
+							"</section>";
 						for(var j=0;j<result[i]["content"].length;++j) {
 							content +=
-								"<section data-auto-animate>";
-							content +=
-									"<h3>" +
-										result[i]["content"][j] +
-									"</h3>";
-							if (j+1 < result[i]["content"].length) {
+							"<section>" +
+								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][0]["chapter"].toString() +  "\">" +
+									"<h2>" +
+										"第" + result[i]["content"][j][0]["chapter"].toString() + "章" +
+									"</h2>" +
+									"<h4 style=\"color: rgb(100, 100, 100);\";>" +
+										result[i]["content"][j][0]["content"] +
+									"</h4>" +
+								"</section>";
+							for(var k=0;k<result[i]["content"][j].length;++k) {
 								content +=
-									"<h3 style=\"color: rgb(100, 100, 100);\";>" +
-										result[i]["content"][j+1] +
+								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][k]["chapter"].toString() + "-" + result[i]["content"][j][k]["section"].toString() +  "\">" +
+									"<h3>" +
+										result[i]["content"][j][k]["content"] +
 									"</h3>";
+								if (k+1 < result[i]["content"][j].length) {
+									content +=
+									"<h3 style=\"color: rgb(100, 100, 100);\";>" +
+										result[i]["content"][j][k+1]["content"] +
+									"</h3>";
+								}
+								content +=
+								"</section>";
 							}
 							content +=
-								"</section>";
-						}
-						content +=
 							"</section>";
+						}
 						$($(".slides")[0]).append(content);
 					}
 					callback();
@@ -73,7 +84,7 @@
 				Reveal.initialize({
 					hash: true,
 					// Learn about plugins: https://revealjs.com/plugins/
-					plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+					plugins: [ RevealMarkdown, RevealHighlight, RevealNotes]
 				})
 			}
 		</script>
