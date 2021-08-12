@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+import re
+import sys
+import json
+input_string = sys.stdin.read()
+books = json.loads(input_string)
+output = list()
+for book in books:
+    newObj = dict()
+    newObj["name"] = book["name"]
+    newObj["content"] = list()
+    newObj["content"].append(list())
+    chapters = book["content"]
+    for chapter in chapters:
+        index_content = re.split(r'\s', chapter)
+        (book_zip, chNum, secNum) = [t(s) for t,s in zip((str, int, int),re.search('^([\u4e00-\u9fff]+)(\d+):(\d+)$',index_content[0]).groups())]
+        newSectionObj = {"book_zip": book_zip,"chapter": chNum, "section": secNum, "content": index_content[1]}
+        if len(newObj["content"][-1]) > 0 and newObj["content"][-1][0]["chapter"] != newSectionObj["chapter"]:
+            newObj["content"].append(list())
+        newObj["content"][-1].append(newSectionObj)
+    output.append(newObj)
+print(json.dumps(output, ensure_ascii=False))
