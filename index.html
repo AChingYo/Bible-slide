@@ -54,6 +54,9 @@
 										"第" + result[i]["content"][j][0]["chapter"].toString() + "章" +
 									"</h2>" +
 									"<h4 style=\"color: rgb(100, 100, 100);\";>" +
+										result[i]["content"][j][0]["book_zip"] +
+										result[i]["content"][j][0]["chapter"] + ":" +
+										result[i]["content"][j][0]["section"] + " " +
 										result[i]["content"][j][0]["content"] +
 									"</h4>" +
 								"</section>";
@@ -61,13 +64,28 @@
 								content +=
 								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][k]["chapter"].toString() + "-" + result[i]["content"][j][k]["section"].toString() +  "\">" +
 									"<h3>" +
+										result[i]["content"][j][k]["book_zip"] +
+										result[i]["content"][j][k]["chapter"] + ":" +
+										result[i]["content"][j][k]["section"] + " " +
 										result[i]["content"][j][k]["content"] +
 									"</h3>";
-								if (k+1 < result[i]["content"][j].length) {
+								var max_length = 70-result[i]["content"][j][k]["content"].length;
+								var tmp = k+1;
+								var bright = 200;
+								while (max_length > 0 && tmp < result[i]["content"][j].length) {
 									content +=
-									"<h3 style=\"color: rgb(100, 100, 100);\";>" +
-										result[i]["content"][j][k+1]["content"] +
+									"<h3 style=\"color: rgb(" +
+											bright.toString() + ", " +
+											bright.toString() + ", " +
+											bright.toString() + ");\";>" +
+										result[i]["content"][j][tmp]["book_zip"] +
+										result[i]["content"][j][tmp]["chapter"] + ":" +
+										result[i]["content"][j][tmp]["section"] + " " +
+										result[i]["content"][j][tmp]["content"] +
 									"</h3>";
+									max_length -= result[i]["content"][j][tmp]["content"].length;
+									++tmp;
+									bright = bright/2;
 								}
 								content +=
 								"</section>";
