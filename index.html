@@ -36,34 +36,29 @@
 			function slideInit(callback) {
 				$.getJSON( "https://achingyo.github.io/Bible-slide/Bible_v1_2.json" , function( result ){
 					for(var i=0;i<result.length;++i) {
-						var content =
-							"<section>" +
-								"<section data-auto-animate id=\"" + result[i]["name"] + "\">" +
-									"<h2>" +
-										result[i]["name"] +
-									"</h2>" +
-									"<h4 style=\"color: rgb(100, 100, 100);\";>" +
-										result[i]["content"][0][0]["content"] +
-									"</h4>" +
-								"</section>" +
-							"</section>";
+						var content = "";
 						for(var j=0;j<result[i]["content"].length;++j) {
 							content +=
-							"<section>" +
-								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][0]["chapter"].toString() +  "\">" +
-									"<h3>" +
-										"第" + result[i]["content"][j][0]["chapter"].toString() + "章" +
-									"</h3>" +
-									"<h4 style=\"color: rgb(100, 100, 100);\";>" +
-										result[i]["content"][j][0]["book_zip"] +
-										result[i]["content"][j][0]["chapter"] + ":" +
-										result[i]["content"][j][0]["section"] + " " +
-										result[i]["content"][j][0]["content"] +
-									"</h4>" +
-								"</section>";
+							"<section>";
 							for(var k=0;k<result[i]["content"][j].length;++k) {
+								if (k == 0) {
+									if (j == 0) {
+										content +=
+								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][k]["chapter"].toString() + "-" + result[i]["content"][j][k]["section"].toString() + "\" data-menu-title=\"" + result[i]["name"] + "\">";
+									} else {
+										content +=
+								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][k]["chapter"].toString() + "-" + result[i]["content"][j][k]["section"].toString() + "\">";
+									}
+									content +=
+									"<h5>" +
+										result[i]["name"] +
+										" 第" + result[i]["content"][j][k]["chapter"].toString() + "章" +
+									"</h5>";
+								} else {
+									content +=
+								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][k]["chapter"].toString() + "-" + result[i]["content"][j][k]["section"].toString() + "\">";
+								}
 								content +=
-								"<section data-auto-animate id=\"" + result[i]["name"] + "-" + result[i]["content"][j][k]["chapter"].toString() + "-" + result[i]["content"][j][k]["section"].toString() +  "\">" +
 									"<h3>" +
 										result[i]["content"][j][k]["book_zip"] +
 										result[i]["content"][j][k]["chapter"] + ":" +
@@ -126,7 +121,7 @@
 						// element will be used.
 						// Note: that a section data-menu-title attribute or an element
 						// with a menu-title class will take precedence over this option
-						titleSelector: 'h1, h2',
+						titleSelector: '',
 
 						// If slides do not have a matching title, attempt to use the
 						// start of the text content as the title instead
